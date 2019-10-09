@@ -2,8 +2,13 @@
   "name": "react-todo-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.15.3"
+  },
   "dependencies": {
     "react": "^16.10.2",
+    "react-cookie": "^4.0.1",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
   },
