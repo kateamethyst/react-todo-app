@@ -1,11 +1,15 @@
 import React from 'react';
 
-const Tasks = ({task}) => {
+const Tasks = ({task, deleteTask}) => {
+
+  const callDeleteTaskFunction = (id) => {
+    deleteTask(id);
+  }
+
   return (
     <div className="task">
-      <input type="checkbox" className="checkbox" />
       <p>{task.title}</p>
-      <button className="close">
+      <button className="close" title="Delete" onClick={() => callDeleteTaskFunction(task.id)}>
         <div className="line line1"></div>
         <div className="line line2"></div>
       </button>

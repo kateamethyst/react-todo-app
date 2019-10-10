@@ -23,7 +23,7 @@ const taskReducer = (state, action) => {
     case ADD_TASK:
       return {
         ...state,
-        tasks: [...state.tasks, action.payload]
+        tasks: action.payload
       };
     case DELETE_TASK:
       return {
@@ -41,21 +41,11 @@ const taskReducer = (state, action) => {
 };
 
 const App = () => {
-  const [cookies, setCookie] = useCookies(['tasks']);
+  const [cookies, setCookie, removeCookie] = useCookies(['tasks']);
   const [state, dispatch] = useReducer(taskReducer, initialState);
   const { tasks } = state;
 
   useEffect(() => {
-    setCookie('tasks', [
-      {
-        title: 'Go to school',
-        id: Math.random()
-      },
-      {
-        title: 'Go to supermarket',
-        id: Math.random()
-      }
-    ]);
     dispatch({
       type: GET_TASK,
       payload: cookies.tasks
@@ -63,28 +53,70 @@ const App = () => {
   }, []);
 
   const add = taskValue => {
-    setCookie('tasks', [...state.tasks, { title: taskValue, id: Math.random() }]);
-    dispatch({
-      type: ADD_TASK,
-      payload: {
+    if (!state.tasks) {
+      dispatch({
+        type: ADD_TASK,
+        payload: [{
+          title: taskValue,
+          id: Math.random()
+        }]
+      });
+      
+      setCookie('tasks', [{
         title: taskValue,
         id: Math.random()
-      }
+      }]);
+    } else {
+      dispatch({
+        type: ADD_TASK,
+        payload: [...state.tasks, {
+          title: taskValue,
+          id: Math.random()
+        }]
+      });
+      
+      setCookie('tasks', [...state.tasks, {
+        title: taskValue,
+        id: Math.random()
+      }]);
+    }
+    
+  };
+
+  const deleteTask = taskId => {
+    let tasks = state.tasks.filter(task => task.id !== taskId);
+    setCookie('tasks', tasks);
+    dispatch({
+      type: DELETE_TASK,
+      payload: tasks
     });
+  };
+
+  const clear = () => {
+    removeCookie('tasks');
+    dispatch({
+      type: CLEAR_TASKS,
+      payload: []
+    })
+    dispatch({
+      type: GET_TASK,
+      payload: []
+    })
   };
 
   return (
     <div className="container">
       <div className="panel">
         <div className="panel-header">
-          <button className="btn">New Todo</button>
+          <Modal add={add} clear={clear}/>
         </div>
         <div className="panel-body">
           <div className="tasks">
             {
-              tasks.map( (task, index) => (
-                <Tasks key={`${index}-${task.title}`} task={task} />
-              ))
+              tasks ? 
+                tasks.map( (task, index) => (
+                  <Tasks key={`${index}-${task.title}`} task={task} deleteTask={deleteTask} />
+                )) : ''
             }
           </div>
         </div>

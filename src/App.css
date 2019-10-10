@@ -7,21 +7,19 @@
   height: 800px;
   margin-top: -400px;
   margin-left: -400px;
-  border-radius: 8px;
   color: #333;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
   font-family: 'Open Sans', Helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	box-shadow: 0px 0px 15px 0 rgba(0,0,0,0.1);
 }
 
-.container > .panel > .panel-header > button{
+.btn{
   outline: none;
   position: absolute;
   top: 24px;
-  right: 24px;
+  right: 110px;
   padding: 8px 12px;
   border: 2px solid #FF9AA2;
   background-color: #FF9AA2;
@@ -31,6 +29,43 @@
   float: right;
   cursor: pointer;
 }
+
+.btn:hover {
+  border: 2px solid #e6727b;
+  background-color: #e6727b;
+}
+.clear{
+  outline: none;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 8px 12px;
+  border: 2px solid #a7a7a7;
+  background-color: #a7a7a7;
+  border-radius: 3px;
+  transition: 0.4s ease-in;
+  color: #fff;
+  float: right;
+  cursor: pointer;
+}
+
+.clear:hover {
+  border: 2px solid #5d5c5c;
+  background-color: #5d5c5c
+}
+
+.input {
+  outline: none;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 570px;
+  padding: 8px 12px;
+  border: 2px solid #eee;
+  border-radius: 3px;
+  color: #333;
+}
+
 .close {
   outline: none;
   border: none;
@@ -72,9 +107,10 @@
 }
 
 .task > .close {
+  cursor: pointer;
   position: absolute;
-  right: 0;
-  top: 40px;
+  right: 24px;
+  top: 35px;
 }
 
 .task > p {
